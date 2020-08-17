@@ -1,0 +1,93 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %}{% load bootstrap %} {% load static %}
+{% load render_table from django_tables2 %}
+{% block content %}
+
+<head>
+    <title>Laundry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'crm/css/tables.css' %}">
+    <link rel="stylesheet" href="{% static 'crm/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'crm/css/bootstrap.min.css' %}">
+    <script src="{% static 'crm/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'crm:search' %}" hidden>
+    <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search Clients" value="{{request.GET.q}}" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+{% if user.is_authenticated %}
+   {% comment %} <div class="container"> {% endcomment %}
+    {% comment %} <div class="container"> {% endcomment %}
+            {% comment %} <div class="floatLeft" style="float:left;"> {% endcomment %}
+        {% comment %} <div class="row">
+            <div class="col-4 ml-auto"> {% endcomment %}
+                {% comment %} <form action="/laundry/bill/" method="POST" name="form">{% csrf_token %} {% endcomment %}
+                    {% comment %} {{ query.get_absolute_url }}"/laundry/bill/" {% url 'laundry:data' bill=pk %} {% endcomment %}
+                    {% comment %} <input type="text" class="form" name="recieveDate" placeholder="Recieve Date"/><br><br>
+                    <input type="text" class="form" name="endDate" placeholder="End Date"/><br><br>
+                    <input type="text" class="form" name="sumtotal" placeholder="Sum Total"/><br><br>
+                    <input type="text" class="form" name="paid" placeholder="Paid"/><br><br>
+                    <input type="text" class="form" name="remain" placeholder="Remain"/><br><br>
+                    <input type="text" class="form" name="client" placeholder="Client Name"/><br><br>
+                    <input type="submit" class="btn-primary" value="Submit"/>             
+                                
+                </form> 
+            </div> {% endcomment %}
+        {% comment %} </div> 
+    </div> {% endcomment %}
+            {% render_table table %}
+    <br>
+    {% comment %} {% if query %}  {% endcomment %}
+        <div class="floatRight" style="float:left;">
+            <form method="POST">{% csrf_token %}  
+                
+                {% comment %} {% for field in form %}
+                    {{ form.field.instance.bill }} <br />
+                    {{ form.field.instance.customer }}
+                {% endfor %} {% endcomment %}
+                {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                {% endfor %}
+                {% comment %} {{ form | crispy }} {% endcomment %}
+                {% comment %}"  {{ query.get_absolute_url }} action="{% url 'laundry:data' bill=pk %}" {% endcomment %}
+                {% comment %} <input type="text" name="launtype" placeholder="Type"/><br><br>
+                <input type="text"  name="quantity" placeholder="Quantity"/><br><br>
+                <input type="text" name="price" placeholder="Price"/><br><br>
+                <input type="text"  name="total" placeholder="Total"/><br><br>
+                <input type="text" name="customer" placeholder="Customer" value="{{ form.instance.customer}}"/><br><br>
+                <input type="text" name="bill" class="dropdwon" placeholder="Bill No" value="{{ form.instance.bill}}"/><br><br> {% endcomment %}
+                <input type="submit" class="btn btn-primary" value="Add"/>             
+            </form>
+        </div>
+        <br />
+
+     
+    </div>
+  
+{% else %}
+<div class="container">
+    <table class="table table-striped">
+        <tbody id="tbody-id">
+          <tr>
+            <td colspan="1">
+              <form class="well form-horizontal" style="background-color:white">
+                  <fieldset>
+                    <br>
+                      <p><strong>You must login in order to continue</strong></p><br>
+                  </fieldset>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+{% endif %}
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

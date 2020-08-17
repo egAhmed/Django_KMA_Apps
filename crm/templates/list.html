@@ -1,0 +1,144 @@
+{% extends 'index.html' %} {% load bootstrap %} {% load static %}
+{% block content %}
+
+<head>
+    <!-- <title>Record Company</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'crm:search' %}" hidden>
+    <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search Clients" value="{{request.GET.q}}" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+{% if user.is_authenticated %}
+    {% if query %} {% for obj in cl_data %}
+    <div class="container">
+        <table class="table table-striped">
+            <a href="{% url 'crm:clients_update' id=obj.id %}" class="btn btn-primary" role="button" id="btn-edit-idno">Edit ID No: {{ obj.id }}</a>
+            <a href="{% url 'crm:clients_edit' %}" class="btn btn-primary" role="button" id="btn-edit-idno">Go To Table</a>
+            <tbody id="tbody-id">
+                <tr>
+                    <td colspan="1" style="background-color:lightgrey">
+                        <form class="well form-horizontal" style="background-color:white; margin: 10px;">
+                            <fieldset>
+                                <p style="margin: 10px;"><strong>ID :</strong> {{obj.id}}</p><br>
+                                <p style="margin: 10px;"><strong>Company Name :</strong> {{obj.name}}</p><br>
+                                <p style="margin: 10px;"><strong>Phone No. :</strong> {{obj.phone}}</p><br>
+                                <p style="margin: 10px;"><strong>Address :</strong> {{obj.address}}</p><br>
+                                {% if obj.photo %}
+                                <p style="margin: 10px;"><strong>Image :</strong></p><img src="{{ obj.photo.url | default_if_none:'#' }}" class="img-responsive" style="width: 800px; height: 900px; float: left; margin-right: 10px;"/>
+                                {% endif %}
+                                <!-- <p><strong>Age :</strong> {{instance.age_}}</p><br><br>
+                                <p><strong>Phone :</strong> {{obj.phone}}</p><br><br>
+                                <p><strong>Husband :</strong> {{obj.husband}}</p><br> -->
+
+                                <!--<div class="form-group">
+    		                            <label class="col-md-4 control-label">ID :</label>
+    		                            <div class="col-md-8 inputGroupContainer">
+    		                               <div class="input-group"><span><i></i></span><input id="fullName" name="fullName" placeholder="Full Name" class="form-control" required="true" value="{{obj.id}}" type="text" disabled></div>
+    		                            </div>
+    		                         </div>-->
+                            </fieldset>
+                            <br>
+                            <a href="{% url 'crm:clients_update' id=obj.id %}" class="btn btn-primary" role="button" id="btn-edit-id">Edit</a>
+
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %} {% include "crm/pagination.html" with page=cl_data %}
+    {% else %} {% for obj in reg_data %}
+    <div class="container">
+        <table class="table table-striped">
+            <a href="{% url 'crm:firm_update' id=obj.id %}" class="btn btn-primary" role="button" id="btn-edit-idno">Edit ID No: {{ obj.id }}</a>
+            <tbody>
+                <tr>
+                    <td colspan="1">
+                        <form class="well form-horizontal" style="background-color:white">
+                            <fieldset>
+                                <p><strong>ID :</strong> {{obj.id}}</p><br>
+                                <p><strong>Company ID :</strong> {{obj.client_id}}</p><br>
+                                <p><strong>Company Name :</strong> {{obj.firm_name}}</p><br>
+                                <p><strong>Manager :</strong> {{obj.manager}}</p><br>
+                                <p><strong>Representative :</strong> {{obj.repres_name}}</p><br>
+                                <p><strong>Last Visit :</strong> {{obj.last_visit}}</p><br>
+                                <p><strong>Notes :</strong> {{obj.notes}}</p><br>
+                                <p><strong>Currency :</strong> {{obj.type}}</p><br>
+                                <p><strong>Taxation  :</strong> {{obj.tax_no}}</p><br>
+                                <p><strong>Paper :</strong> {{obj.part_no}}</p><br>
+                                <p><strong>Papers :</strong> {{obj.purchase_no}}</p><br>
+                                <!-- <p><strong>Age :</strong> {{instance.age_}}</p><br><br>
+                    								 <p><strong>Phone :</strong> {{obj.phone}}</p><br><br>
+                    								 <p><strong>Husband :</strong> {{obj.husband}}</p><br> -->
+
+                          </fieldset>
+                                <a href="{% url 'crm:firm_update' id=obj.id %}" class="btn btn-primary" role="button" id="btn-edit-id">Edit</a>
+                      </form>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+    </div>
+
+    {% endfor %} {% include "crm/pagination.html" with page=reg_data %}
+    {% endif %}
+
+
+    {% if search_res %} {% include "crm/pagination.html" with page=search_res %}
+      {% for obj in search_res %}
+        <div class="container">
+            <table class="table table-striped">
+                <a href="{% url 'crm:clients_update' id=obj.id %}" class="btn btn-primary" role="button" id="btn-edit-id">Edit ID No.: {{ obj.id }}</a>
+                <tbody id="tbody-id">
+                    <tr>
+                        <td colspan="1">
+                          <form class="well form-horizontal" style="background-color:white">
+                              <fieldset>
+                                  <p><strong>ID :</strong> {{obj.id}}</p><br>
+                                  <p><strong>Company Name :</strong> {{obj.name}}</p><br>
+                                  <p><strong>Phone No. :</strong> {{obj.phone}}</p><br>
+                                  <p><strong>Address :</strong> {{obj.address}}</p><br>
+                                  {% if obj.photo %}
+                                  <img src="{{ obj.photo.url | default_if_none:'#' }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+                                  {% endif %}
+                              </fieldset>
+                                <a href="{% url 'crm:clients_update' id=obj.id %}" class="btn btn-primary" role="button" id="btn-edit-id">Edit</a>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        {% endfor %} {% include "crm/pagination.html" with page=search_res %}
+    {% endif %}
+
+{% else %}
+<br>
+<div class="container">
+    <table class="table table-striped">
+        <tbody id="tbody-id">
+          <tr>
+            <td colspan="1">
+              <form class="well form-horizontal" style="background-color:white">
+                  <fieldset>
+                    <br>
+                      <p><strong>You must login in order to continue</strong></p><br>
+                    <!-- <br> -->
+                  </fieldset>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+{% endif %}
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

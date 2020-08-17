@@ -1,0 +1,92 @@
+{% extends 'laundry/index.html' %} {% load crispy_forms_tags %}{% load bootstrap %} {% load static %}
+{% load render_table from django_tables2 %}
+{% load querystring from django_tables2 %}
+{% block content %}
+
+<head>
+    <title>Laundry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/jquery-ui.min.css' %}">
+    {% comment %} <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> {% endcomment %}
+    {% comment %} <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> {% endcomment %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<a href="{% querystring '_export'='tsv' %}">Download TSV</a><br />
+
+<a href="{% querystring '_export'='yaml' %}">Download YAML</a><br />
+
+<a href="{% querystring '_export'='latex' %}">Download LATEX</a><br />
+
+<a href="{% querystring '_export'='ods' %}">Download ODS</a><br />
+
+<a href="{% querystring '_export'='xlsx' %}">Download XLSX</a><br />
+
+<a href="{% querystring '_export'='json' %}">Download JSON</a><br />
+
+<a href="{% querystring '_export'='csv' %}">Download CSV</a>
+
+<a href="{% querystring '_export'='xlsx' %}">Download XLSX</a>
+<form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'laundry:search' %}" hidden>
+    <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search" value="{{request.GET.q}}" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+<br />
+{% if user.is_authenticated %} 
+    {% if table %}
+        <div >
+            {% for format in table.export_formats %}
+                <a href="{% querystring '_export'=format %}">
+                    download  <code>.{{ format }}</code>
+                </a>
+            {% endfor %}
+            {% comment %} {% export_url "csv" %} {% endcomment %}
+            
+            {% comment %} {% for format in view.export_formats %}
+                <a href="{% export_url format %}">
+                    download  <code>.{{ format }}</code>
+                </a>
+            {% endfor %} {% endcomment %}
+            {% render_table table %}
+
+        </div>
+    {% comment %} {% elif table_search %}
+        <div >
+            {% render_table table_search %}
+        </div> {% endcomment %}
+    {% endif %}
+    <br />
+
+{% else %}
+    <div class="container" style="inline:block;">
+        <br />
+        <br />
+    </div>
+    <div class="container">
+        <tr>
+            <td colspan="1">
+                <form class="well form-horizontal" style="background-color:white">
+                    <fieldset>
+                        <br />
+                        <p><strong>You must login in order to continue</strong></p><br>
+                    </fieldset>
+                </form>
+            </td>
+        </tr>
+    </div>
+    <br>
+{% endif %}
+
+<script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script >
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,343 @@
+{% load static %}
+{% url 'laundry:remain_zero' as remain_zero_url %}
+{% url 'laundry:paid_zero' as paid_zero_url %}
+{% url 'laundry:canceled_bill' as canceled_bill_url %}
+{% url 'laundry:calculate_sum' as sum_url %}
+{% url 'laundry:all_remain' as all_remain_url %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Laundry Application</title>
+    <!-- NOTE:important the problem in 'style.css' was because of the 'crm' folder inside the 'static' folder
+            so i changed the path TO 'STATIC_URL = '/static/crm/' in 'settings' instead of "STATIC_URL = '/static/'"
+          GoTo 'settings' to understand what happen to solve this issue  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'img/washing1.png' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static "css/tailwind.css" %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+</head>
+
+<body class="override">
+    <header>
+      <!-- Fixed navbar -->
+      {% comment %} <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"> {% endcomment %}
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/laundry/">Laundry Application</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="container">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button> 
+            <li class="nav-item dropdown active">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add Items
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item active" href="/crm/clients/">Add User</a>
+                <a class="dropdown-item active" href="/laundry/bill/">New Bill</a>
+              </div>
+            </li> {% endcomment %} 
+            {% if request.path == '/laundry/' %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'laundry:remain_zero' %}">Reports <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'laundry:daily_reports' %}">Daily Reports <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+              <a class="nav-link" href="/crm/clients/">Add User <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/laundry/bill/">New Bill <span class="sr-only">(current)</span></a>
+              </li>
+            {% endif %}
+
+            {% if request.path == sum_url %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:remain_zero' %}">All Finished Bills <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:paid_zero' %}">Zero Paid Bills <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:all_remain' %}">All Remain Bills <span class="sr-only">(current)</span></a>
+                </li>  
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:canceled_bill' %}">Canceled Bill <span class="sr-only">(current)</span></a>
+                </li> 
+            {% endif %}
+            
+            {% if request.path == all_remain_url %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:calculate_sum' %}">Totals<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:remain_zero' %}">All Finished Bills <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:paid_zero' %}">Zero Paid Bills <span class="sr-only">(current)</span></a>
+                </li> 
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:canceled_bill' %}">Canceled Bill <span class="sr-only">(current)</span></a>
+                </li> 
+            {% endif %}
+
+            {% if request.path == remain_zero_url %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:calculate_sum' %}">Totals <span class="sr-only">(current)</span></a>
+                </li> 
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:paid_zero' %}">Zero Paid Bills <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:all_remain' %}">All Remain Bills <span class="sr-only">(current)</span></a>
+                </li>  
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:canceled_bill' %}">Canceled Bill <span class="sr-only">(current)</span></a>
+                </li> 
+            {% endif %}
+
+            {% if request.path == canceled_bill_url %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:calculate_sum' %}">Totals <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:remain_zero' %}">All Finished Bills <span class="sr-only">(current)</span></a>
+                </li> 
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:paid_zero' %}">Paid Zero Bills <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:all_remain' %}">All Remain Bills <span class="sr-only">(current)</span></a>
+                </li>    
+            {% endif %}
+
+            {% if request.path == paid_zero_url %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:calculate_sum' %}">Totals <span class="sr-only">(current)</span></a>
+                </li> 
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:remain_zero' %}">All Finished Bills <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:all_remain' %}">All Remain Bills <span class="sr-only">(current)</span></a>
+                </li>  
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:canceled_bill' %}">Canceled Bill <span class="sr-only">(current)</span></a>
+                </li> 
+            {% endif %}
+
+            {% if item_bill %}
+              {% comment %} <li class="nav-item active">
+                <a class="nav-link" href="{% url 'laundry:data' bill=editbill.id %}">Bill Details <span class="sr-only">(current)</span></a>
+              </li>
+            {% else %} {% endcomment %}
+              <li class="nav-item" disabled>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Bill Details</a>
+              </li>
+            {% endif %} 
+            {% comment %} {% if qs1 %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:data' bill=qs1.bill %}">Add Items <span class="sr-only">(current)</span></a>
+                </li> 
+            {% endif %} {% endcomment %}
+            {% if editbill_data %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{{ editbill_data.get_url_by_id }}">Edit Bill <span class="sr-only">(current)</span></a>
+              </li>
+              {% comment %} <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'laundry:data' bill=addbill.bill %}">Add Items <span class="sr-only">(current)</span></a>
+              </li> {% endcomment %}
+              {% comment %} {{ editbill_data.get_absolute_url }} {% endcomment %}
+              {% comment %} <li class="nav-item active">
+                <a class="nav-link" href="{% url 'laundry:data' bill=editbill.id %}">Bill Details <span class="sr-only">(current)</span></a>
+              </li> {% endcomment %}
+              {% comment %} <li class="nav-item" disabled>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Bill Details</a>
+              </li>  {% endcomment %}
+            {% elif editbill %}
+              {% comment %} <li class="nav-item" disabled>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Edit Bill</a>
+              </li> {% endcomment %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'laundry:data' bill=editbill.id %}">Bill Details <span class="sr-only">(current)</span></a>
+              </li>
+              {% comment %} <li class="nav-item active">
+                <a class="nav-link" href="{% url 'laundry:data' bill=editbill.id %}">Bill Details <span class="sr-only">(current)</span></a>
+              </li> {% endcomment %}
+            {% endif %}
+            {% if user.is_authenticated %}
+              {% comment %} <li class="nav-item active">
+                <a class="nav-link" href="/crm/">Home</a>
+              </li> {% endcomment %}
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Welcome: {{ user.username }} <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'logout' %}">Log out <span class="sr-only">(current)</span></a>
+              </li> 
+            {% else %}
+              <li class="nav-item" disabled>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Home</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/login/">Login <span class="sr-only">(current)</span></a>
+              </li>
+            {% endif %} 
+            
+          </ul>
+          {% if request.path == '/laundry/day/report/' %}
+          {% elif request.path == '/laundry/search/date/' %}
+          {% else %}
+            <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'laundry:search' %}">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search" value="{{request.GET.q}}" name="q">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          {% endif %}
+        </div>
+        </div>
+      </nav>
+    </header>
+    
+  {% if user.is_authenticated %}
+    <div class="container" style="inline:block;">
+        <br />
+        <br />
+        {% comment %} <br /> {% endcomment %}
+    </div>  
+
+    <div class="container">
+      <div class="row">
+          <div class="col">
+            {% block content %}
+            {% endblock %}
+          </div>
+      </div>
+    </div>
+  {% endif %} 
+
+
+    {% comment %} <footer class="footer mt-auto py-3"id="footer"> <!-- "fixed-bottom" "footer mt-auto py-3" --> {% endcomment %}
+        <!-- class= "site-footer footer-partners"-->
+        <!-- <div class="footer-partner footer-partner-codepen" id="divfooter">
+             <div class="row well ml-t">
+            <div class="col-lg-8 col-md-8" id="fodev">
+              <span class="text-muted"> -->
+        {% comment %} <div class="footer-partner footer-partner-codepen" id="divfooter">
+            <div class="container" id="footer-login">
+                    <div class="col-lg-4 col-md-4" id="all">
+                        <p class="m-t" style="color:white"><a href="https://amr-aly.simplesite.com" target="_blank">www.amr-aly.simplesite.com</a></p>
+                        <p class="m-t" style="color:white">Copy right &copy Amr Aly {% now "Y" %}</p>
+                    </div>
+            </div>
+        </div> {% endcomment %}
+        <!-- <div style="clear:both; display:block;"></div> -->
+    {% comment %} </footer> {% endcomment %}
+  <!--Footer-->
+{% comment %}  {% endcomment %}
+
+    <footer class="page-footer bg-dark text-white font-small mdb-color">
+                <div class="container text-center text-md-left">
+                    <div class="row text-center text-md-left mt-3 pb-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-4">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">About WebSite </h6>
+                            <p>This website is developed by Python <i class="fab fa-python" aria-hidden="true"></i>, Javascript <i class="fab fa-js-square" aria-hidden="true"></i> and JQuery for personal portfolio &amp; ----------- web application hosted on ---------. All images used in site are copyright ----- image.</p>
+                        </div>
+                        <hr class="w-100 clearfix d-md-none">
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">Projects</h6>
+                            <p>
+                                <a class="text-info font-weight-bold" href="#"><i class="fas fa-fan mr-3" aria-hidden="true"></i> Iris Project</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="fas fa-car mr-3" aria-hidden="true"></i> AutoMgl Project</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="far fa-envelope mr-3" aria-hidden="true"></i>Punctuation</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="fab fa-github mr-3" aria-hidden="true"></i> Amr Aly</a>
+                            </p>
+                        </div>
+                        <hr class="w-100 clearfix d-md-none">
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">Useful links</h6>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="fas fa-user-plus mr-3" aria-hidden="true"></i> Your Account</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="far fa-paper-plane mr-3" aria-hidden="true"></i> Link_1</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#" target="_blank"><i class="far fa-paper-plane mr-3" aria-hidden="true"></i> Link_2</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#" target="_blank"><i class="far fa-paper-plane mr-3" aria-hidden="true"></i> Link_3</a>
+                            </p>
+                        </div>
+                        <hr class="w-100 clearfix d-md-none">
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">Contact</h6>
+                            <p>
+                            <i class="fas fa-home mr-3" aria-hidden="true"></i> Egypt, Alexandria</p>
+                            <p>
+                            <i class="fas fa-envelope mr-3" aria-hidden="true"></i> kmasoftwaresolutions@gmail.com</p>
+                            <p>
+                            <i class="fas fa-mobile-alt mr-4" aria-hidden="true"></i> +20-106-717-4141</p>      
+                        </div>      
+                    </div>
+                    <hr>
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-7 col-lg-8">
+                            <p class="text-center text-md-left">&copy Amr Aly Copyright:  {% now "Y" %}    
+                            <a href="https://github.com/cehceh" target="_blank">
+                                <strong class="text-info font-weight-bold"><i class="fab fa-github-alt" aria-hidden="true"></i> KMA for software solutions</strong>
+                            </a>
+                            </p>
+                        </div>
+                            <div class="col-md-5 col-lg-4 ml-lg-0">
+                                <div class="text-center text-md-right">
+                                    <ul class="list-unstyled list-inline">
+                                        <li class="list-inline-item">
+                                        <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://www.facebook.com" target="_blank">
+                                            <i class="fab fa-facebook-f" aria-hidden="false">FB</i>
+                                        </a>
+                                        </li> 
+                                        <li class="list-inline-item">
+                                        <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://twitter.com/" target="_blank">
+                                            <i class="fab fa-twitter" aria-hidden="true">twitter</i>
+                                        </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                        <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://google.com/" target="_blank">
+                                            <i class="fab fa-google-plus-g" aria-hidden="true"></i>
+                                        </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://www.linkedin.com/in/amr-ali-82909894/" target="_blank">
+                                                <i class="fab fa-linkedin-in" aria-hidden="true">linkedin</i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </footer> 
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

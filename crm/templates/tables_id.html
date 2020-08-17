@@ -1,0 +1,118 @@
+{% extends 'index.html' %} {% load bootstrap %} {% load static %} {% block content %}
+
+<head>
+    <!-- <title>Record Company</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<div class="container" id='div-table'>
+    <!-- <form method="post">
+        {% csrf_token %} -->
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <!-- <div class="panel-heading"></div> -->
+            <div class="panel-body">
+
+                <h2>Responsive Table</h2>
+                <div class="table-wrapper">
+                    <table class="fl-table" id="table">
+
+                        <a class="btn btn-primary" href="{% url 'crm:clients_id' id=1 %}" id="btn-cl">Back</a>
+                        <a class="btn btn-primary" href="{{ client.get_absolute_url }}" id="btn-cl">Go To ID</a>
+                        <div class=""></div>
+                        <thead>
+                            <tr>
+                                <th>Client ID</th>
+                                <th>Client Name</th>
+                                <th>Phone No.</th>
+                                <th>Address</th>
+                                <th>Header 5</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{clients.id}}</td>
+                                <td>{{clients.name}}</td>
+                                <td>{{clients.phone}}</td>
+                                <td>{{clients.address}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <!-- 
+                        <table class="fl-table" id="table">
+                            {% if client %}
+                            <a class="btn btn-primary" href="{% url 'crm:clients_id' id=1 %}" id="btn-cl">Back</a>
+                            <a class="btn btn-primary" href="{{ client.get_absolute_url }}" id="btn-cl">Go To ID</a>
+                            <div class=""></div>
+                            <thead>
+                                <tr>
+                                    <th>Client ID</th>
+                                    <th>Client Name</th>
+                                    <th>Phone No.</th>
+                                    <th>Address</th>
+                                    <th>Header 5</th>
+                                </tr>
+                            </thead>
+                            {% for cl in client %}
+                            <tbody>
+                                <tr>
+                                    <td>{{cl.id}}</td>
+                                    <td>{{cl.name}}</td>
+                                    <td>{{cl.phone}}</td>
+                                    <td>{{cl.address}}</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            {% endfor %} {% else %}
+                            <a class="btn btn-primary" href="{% url 'crm:record_firm' %}" id="btn-rec">Back</a>
+                            <br/>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Currency</th>
+                                    <th>Company Name</th>
+                                    <th>Manager</th>
+                                    <th>Representative</th>
+                                    <th>Last Visit</th>
+                                    <th>Notes</th>
+                                    <th>Taxation No.</th>
+                                    <th>Papers1</th>
+                                    <th>Papers2</th>
+                                </tr>
+                            </thead>
+                            {% for rec in recordfirm %}
+                            <tbody>
+                                <tr>
+                                    <td>{{rec.id}}</td>
+                                    <td>{{rec.type}}</td>
+                                    <td>{{rec.firm_name}}</td>
+                                    <td>{{rec.manager}}</td>
+                                    <td>{{rec.repres_name}}</td>
+                                    <td>{{rec.last_visit}}</td>
+                                    <td>{{rec.notes}}</td>
+                                    <td>{{rec.tax_no}}</td>
+                                    <td>{{rec.part_no}}</td>
+                                    <td>{{rec.purchase_no}}</td>
+                                </tr>
+                            </tbody>
+                            {% endfor %} {% endif %}
+
+                             </tbody> -->
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<!-- </div> -->
+{% endblock %}

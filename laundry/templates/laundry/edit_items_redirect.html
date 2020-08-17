@@ -1,0 +1,189 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %}{% load bootstrap %} {% load static %}
+{% load render_table from django_tables2 %}
+{% block content %}
+
+<head>
+    <title>Laundry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% comment %} <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> {% endcomment %}
+    {% comment %} <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> {% endcomment %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'crm:search' %}" hidden>
+    <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search Clients" value="{{request.GET.q}}" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+{% if user.is_authenticated %}
+   {% comment %} <div class="container"> {% endcomment %}
+    {% comment %} <div class="container"> {% endcomment %}
+            {% comment %} <div class="floatLeft" style="float:left;"> {% endcomment %}
+        {% comment %} <div class="row">
+            <div class="col-4 ml-auto"> {% endcomment %}
+                {% comment %} <form action="/laundry/bill/" method="POST" name="form">{% csrf_token %} {% endcomment %}
+                    {% comment %} {{ query.get_absolute_url }}"/laundry/bill/" {% url 'laundry:data' bill=pk %} {% endcomment %}
+                    {% comment %} <input type="text" class="form" name="recieveDate" placeholder="Recieve Date"/><br><br>
+                    <input type="text" class="form" name="endDate" placeholder="End Date"/><br><br>
+                    <input type="text" class="form" name="sumtotal" placeholder="Sum Total"/><br><br>
+                    <input type="text" class="form" name="paid" placeholder="Paid"/><br><br>
+                    <input type="text" class="form" name="remain" placeholder="Remain"/><br><br>
+                    <input type="text" class="form" name="client" placeholder="Client Name"/><br><br>
+                    <input type="submit" class="btn-primary" value="Submit"/>             
+                                
+                </form> 
+            </div> {% endcomment %}
+        {% comment %} </div> 
+    </div> {% endcomment %}
+            {% render_table table %}
+    <br>
+    {% comment %} {% if query %}  {% endcomment %}
+        <div class="floatLeft" style="float:left;">
+            <form method="POST">{% csrf_token %}  
+                {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                {% endfor %}
+                <br />
+                {% comment %} <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    {{ form.recieveDate }}
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div> {% endcomment %}
+                {% comment %} {{ form.billfield.bill }}
+                {{ form.query.customer }}
+                {{ form | crispy }} {% endcomment %}
+                {% comment %}"  {{ query.get_absolute_url }} action="{% url 'laundry:data' bill=pk %}" {% endcomment %}
+                {% comment %} <input type="text" name="customer" placeholder="Customer"/><br><br>
+                <input type="text" name="launtype" placeholder="Type"/><br><br>
+                <input type="text"  name="quantity" placeholder="Quantity"/><br><br>
+                <input type="text" name="price" placeholder="Price"/><br><br>
+                <input type="text"  name="total" placeholder="Total"/><br><br> {% endcomment %}
+                {% comment %} <input type="text" name="bill" placeholder="Bill No"/><br><br> {% endcomment %}
+                <input type="submit" class="btn btn-primary" value="Update"/>             
+            </form>
+        </div>
+        <br />
+    {% comment %} {% endif %} {% endcomment %}
+         
+    {% comment %} {% endif %} {% endcomment %}
+
+{% for obj in item_bill %}  
+        <div class="row" style="float:right;">
+            {% comment %} <table class="table table-striped">
+                <a href="{% url 'laundry:data' bill=item_id.bill %}" class="btn btn-primary" role="button" id="btn-edit-id">Edit Bill ID : {{ obj.bill }}</a>
+                <tbody id="tbody-id">
+                    <tr>
+                        <td colspan="1"> {% endcomment %}
+                            {% comment %} <form class="well form-horizontal" style="background-color:white"> {% endcomment %}
+                                <div >
+                                {% comment %} <fieldset> {% endcomment %}
+                                    {% comment %} <p><strong>Bill ID :</strong> {{ item_id.bill }}</p><br>
+                                    <p><strong>Name :</strong> {{item_id.customer}}</p><br>
+                                    <p><strong>Item ID :</strong> {{ item_id.id }}</p><br>
+                                    <p><strong>Type :</strong> {{item_id.launtype}}</p><br>
+                                    <p><strong>Quantity :</strong> {{item_id.quantity}}</p><br>
+                                    <p><strong>Price :</strong> {{item_id.price}}</p><br>
+                                    <p><strong>Total :</strong> {{item_id.total}}</p><br> {% endcomment %}
+                                {% comment %} </fieldset> {% endcomment %}
+                                    {% comment %} <a href="{% url 'laundry:edit_items' bill=obj.bill id=obj.id %}" class="btn btn-primary" role="button" id="btn-edit-id">ID= {{obj.id}}, Type: {{obj.launtype}}</a> <br>
+                                    <br /> {% endcomment %}
+                                    
+                                </div>
+                            {% comment %} </form> {% endcomment %}
+                        {% comment %} </td>
+                      </tr>
+                    </tbody>
+                  </table> {% endcomment %}
+            </div>
+        {% endfor %}
+
+    {% comment %} <div class="container"> {% endcomment %}
+        {% comment %} <div class="floatRight"> {% endcomment %}
+        {% comment %} {% if query %} {% endcomment %}
+
+           {% comment %} <div class="row">
+                 <div class="col-8 ml-auto"
+                    <ul>
+                        {% for q in query %}
+                            <li><p>Bill ID :</p>{{q.bill}}</li>
+                            <li><p>Customer ID :</p>{{q.customer}}</li>
+                            <li><p>Type :</p>{{q.launtype}}</li>
+                            <li><p>Quantity :</p>{{q.quantity}}</li>
+                            <li><p>Price :</p>{{q.price}}</li>
+                            <li><p>Total :</p>{{q.total}}</li>
+                            <h5>==========</h5>
+                            <br>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div> {% endcomment %}
+            {% comment %} {% endif %} {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+      {% comment %} <div class="container" id='div-table'>
+          <div class="col-md-8 col-md-offset-2">
+              <div class="panel panel-default">
+                  <div class="panel-body">
+                      <div class="table-wrapper">
+                        <table class="fl-table" id="table"> <!-- class="fl-table" -->
+                            <thead>
+                                  <tr>
+                                      <th>Bill ID</th>
+                                      <th>Recieve Date</th>
+                                      <th>End Date</th>
+                                      <th>Type</th>
+                                      <th>Quantity</th>
+                                      <th>Price</th>
+                                      <th>Total</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>{{q.id}}</td>
+                                      <td>{{q.recieve_date}}</td>
+                                      <td>{{q.end_date}}</td>
+                                      <td>{{q.launtype}}</td>
+                                      <td>{{q.quantity}}</td>
+                                      <td>{{q.price}}</td>
+                                      <td>{{q.total}}</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div> {% endcomment %}
+    </div>
+  
+{% else %}
+<div class="container">
+    <table class="table table-striped">
+        <tbody id="tbody-id">
+          <tr>
+            <td colspan="1">
+              <form class="well form-horizontal" style="background-color:white">
+                  <fieldset>
+                    <br>
+                      <p><strong>You must login in order to continue</strong></p><br>
+                  </fieldset>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+{% endif %}
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

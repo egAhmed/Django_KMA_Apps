@@ -1,0 +1,102 @@
+{% load crispy_forms_tags %}
+{% load static %}
+{% load bootstrap %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Sign Up</title>
+        <!-- {% load static %} -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    </head>
+    <body class="d-flex flex-column h-100">
+       <header>
+         <!-- Fixed navbar -->
+         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+           <a class="navbar-brand" href="#">Fixed navbar</a>
+           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+           </button>
+           <div class="collapse navbar-collapse" id="navbarCollapse">
+             <ul class="navbar-nav mr-auto">
+               <li class="nav-item active">
+                 <a class="nav-link" href="/signup/">Register <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item active">
+                 <a class="nav-link" href="/login/">Login <span class="sr-only">(current)</span></a>
+               </li>
+               {% if user.is_authenticated %}
+                   <li class="nav-item active">
+                     <a class="nav-link" href="/crm/">Home</a>
+                   </li>
+               {% else %}
+                   <li class="nav-item" disabled>
+                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Home</a>
+                   </li>
+               {% endif %}
+               <li class="nav-item">
+                 <a class="nav-link" href="http://github.com/cehceh">Github</a>
+               </li>
+               <li class="nav-item" disabled>
+                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+               </li>
+             </ul>
+             <form class="form-inline mt-2 mt-md-0">
+               <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+             </form>
+           </div>
+         </nav>
+        </header>
+    <h2>
+        <p id="p-signup">Sign up</p>
+    </h2>
+    <br/>
+
+    <!-- Begin page content -->
+    <main role="main" class="flex-shrink-0">
+    <div class="container">
+          <!--
+            <h1>Thank you for registering!</h1>
+
+            <h1>Register Here</h1>
+            <h3>Just fill out the form.</h3> -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="" id="form1"> <br/>
+                <!-- {{ form|bootstrap_horizontal }} -->
+                {{ form|crispy }}
+                <!-- {{ profile_form|crispy }} -->
+                <button type="submit" class="btn btn-primary" id="btn-signup">Sign up</button>
+            </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3">
+        <div class="footer-partner footer-partner-codepen" id="divfooter">
+          <div class="container" id="footer-signup" style="background-color: #324960;">
+            <span class="text-muted">
+              <div class="col-lg-4 col-md-4" id="all">
+                  <p class="m-t" style="color:white">Copy right &copy Amr Aly {% now "Y" %}</p>
+                  <p class="m-t" style="color:white"><a href="https://amr-aly.simplesite.com" target="_blank">www.amr-aly.simplesite.com</a></p>
+                  <p class="m-t" style="color:white">© All Rights Reserved to KMA for Software Solution.</p>
+              </div>
+            </span>
+          </div>
+        </div>
+    </footer>
+
+  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+  </body>
+</html>

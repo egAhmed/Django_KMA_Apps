@@ -1,0 +1,170 @@
+{% extends 'laundry/index.html' %} {% load crispy_forms_tags %}{% load bootstrap %}
+{% load static %}
+{% block content %}
+
+<head>
+    <title>Laundry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/jquery-ui.min.css' %}">
+
+    
+    {% comment %} <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="/resources/demos/style.css"> {% endcomment %}
+    {% comment %} <script src="https://code.jquery.com/jquery-1.12.4.js"></script> {% endcomment %}
+    {% comment %} <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> {% endcomment %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        $(function () {
+        $("#datepicker1").datetimepicker();
+        });
+    </script>
+</head>
+<form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'crm:search' %}" hidden>
+    <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search Clients" value="{{request.GET.q}}" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+{% comment %} {% if user.is_authenticated %} {% endcomment %}
+   {% comment %} <div class="container"> {% endcomment %}
+    {% comment %} <div class="container"> {% endcomment %}
+    {% comment %} {% if form.is_valid %} {% endcomment %}
+        {% if form %}
+            <div class="floatLeft" style="float:left;">
+                <form method="POST">{% csrf_token %}
+                    <div class="" id="f-add-bill">
+                        {% comment %} {{ form | crispy }} <br /> {% endcomment %}
+                        {{ form.recieveDate.label_tag }} <br /> {{ form.recieveDate }}<br />
+                        {{ form.endDate.label_tag }} <br /> {{ form.endDate }}<br />
+                        {{ form.sumtotal.label_tag }} <br /> {{ form.sumtotal }}<br />
+                        {{ form.paid.label_tag }} <br /> {{ form.paid }}<br />
+                        {{ form.remain.label_tag }} <br /> {{ form.remain }}<br />
+                        {{ form.client.label_tag }} <br /> {{ form.client }}<br />
+                        {{ form.paidDone.label_tag }} <br /> {{ form.paidDone }}<br />
+                        <label>Canceled This Bill :</label> <br />
+                        <label class="switch"> 
+                        {{ form.returns }} 
+                        {% comment %} <input type="checkbox"> {% endcomment %}
+                        <span class="slider round"></span>
+                        </label>
+                        <br /><br />
+                        <input type="submit" class="btn btn-primary" value="Submit" id="btn-add-bill"/> 
+                    </div>                                            
+                </form> 
+            </div>
+        <br>
+        {% endif %}
+
+    {% if sum_form_1 %}
+        {% comment %} <div class="form-control" style=""> {% endcomment %}
+            <div class="floatLeft" style="float:left;">
+                <form method="POST">{% csrf_token %}
+                    <br />
+                    <h1>Totals Bills</h1>
+                    <div class="" id="f-add-bill">
+                        <label>Total Bills :</label> <br />
+                        {{ sum_form_1.sumtotal }}<br />
+                        <label>Total Paid :</label> <br />
+                        {{ sum_form_1.paid }}<br />
+                        <label>Total Remain :</label> <br />
+                        {{ sum_form_1.remain }}<br />
+                    </div>                                            
+                </form> 
+            </div>
+            <div class="floatRight" style="float:right;">
+                <form method="POST">{% csrf_token %}
+                    <br />
+                    <h1>Totals For Returns Bills</h1>
+                    <br />
+                    <div class="" id="f-add-bill">
+                        <label>Total Bills :</label> <br />
+                        {{ sum_form_2.sumtotal }}<br />
+                        <label>Total Paid :</label> <br />
+                        {{ sum_form_2.paid }}<br />
+                        <label>Total Remain :</label> <br />
+                        {{ sum_form_2.remain }}<br />
+                    </div>                                            
+                </form> 
+            </div>
+        {% comment %} </div> {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+        {% comment %} <br /><br /> {% endcomment %}
+        {% comment %} {% if  %}{% endif %} {% endcomment %}
+        {% comment %} <div class="container" style="margin:10px; padding:5px"> {% endcomment %}
+            {% comment %} <hr/> {% endcomment %}
+            <div class="container content-center" style="float:left;">
+                <form method="POST">{% csrf_token %}
+                    <br />
+                    <h1>All Finished Bills</h1>
+                    <div class="" id="f-add-bill">
+                        <label>Total Bills :</label> <br />
+                        {{ sum_form_3.sumtotal }}<br />
+                        <label>Total Paid :</label> <br />
+                        {{ sum_form_3.paid }}<br />
+                        <label>Total Remain :</label> <br />
+                        {{ sum_form_3.remain }}<br />
+                    </div>                                            
+                </form> 
+            </div>
+            <div class="container content-center" style="float:right;">
+                <form method="POST">{% csrf_token %}
+                    <br />
+                    <h1>All Bills Have Remain </h1>
+                    <br />
+                    <div class="" id="f-add-bill">
+                        <label>Total Bills :</label> <br />
+                        {{ sum_form_4.sumtotal }}<br />
+                        <label>Total Paid :</label> <br />
+                        {{ sum_form_4.paid }}<br />
+                        <label>Total Remain :</label> <br />
+                        {{ sum_form_4.remain }}<br />
+                    </div>                                            
+                </form> 
+            </div>
+        {% comment %} </div> {% endcomment %}
+
+    {% endif %}
+
+    
+    {% comment %} {% endif %} {% endcomment %}
+  
+{% comment %} {% else %}
+    <div class="container">
+        <table class="table table-striped">
+            <tbody id="tbody-id">
+            <tr>
+                <td colspan="1">
+                <form class="well form-horizontal" style="background-color:white">
+                    <fieldset>
+                        <br>
+                        <p><strong>You must login in order to continue</strong></p><br>
+                    </fieldset>
+                </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+{% endif %} {% endcomment %}
+
+<script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script>
+    $('#datepicker1, #enddate').datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+    {% comment %} $("#f-add-bill").animate({
+        padding: "10px",
+        margin: "20px",
+        width: "1000px",
+        height: "1000px"
+    }, 500); {% endcomment %}
+</script>
+
+{% endblock %}

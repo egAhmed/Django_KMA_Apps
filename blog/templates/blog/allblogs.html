@@ -1,0 +1,82 @@
+<!-- extend from an index.html to make the style of thehome page of your project is the same in all Application -->
+<!-- Or you have to create another index.html file for every app. to make it unique /[[[[]]]]-->
+{% load bootstrap %} {% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Amr's Blog</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url 'jobs:home' %}">My Projects</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+          <a class="nav-item nav-link" href="http://github.com/cehceh">Github</a>
+          <a class="nav-item nav-link" href="{% url 'jobs:home' %}" >My Projects</a>
+          <a class="nav-item nav-link" href="{% url 'crm:home' %}" >Main App</a>
+          <!-- <a class="nav-link disabled" href="{% static 'seven_habits.pdf' %}">Resume</a> -->
+          <!-- <a class="nav-item nav-link active" id="blog-button" href="{% url 'blog:allblogs' %}">Blog</a> -->
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main">
+    <div class="container">
+
+    <h1 class="text-center pt-3" id="welcome-message">Welcome to Amr's Blog</h1>
+    <br />
+    <br />
+    <h2>Latest Posts</h2>
+    <hr />
+
+    {% for blog in blogs.all %}
+    <a href="{% url 'blog:detail' blog.id %}"><h3>{{ blog.title }}</h3></a>
+    {{ blog.pub_date_pretty }}
+    <br />
+    <img class="img-fluid" src="{{ blog.image.url }}" height=200 width=200 />
+    <br />
+    <p>{{ blog.summary }}</p>
+    {% endfor %}
+
+  </div>
+
+  </main>
+
+  <footer class="fixed-bottom">
+    <div class="container text-center">
+      <p>© Amr Aly {% now "Y" %}</p>
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  {% include "crm/pagination.html" with page=blogs %}
+
+</body>
+</html>

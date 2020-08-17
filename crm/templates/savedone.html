@@ -1,0 +1,28 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %} {% load bootstrap %} {% load static %} {% block content %}
+
+<head>
+    <!-- <title>Record Company</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'ss/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<div id='save'>
+    <h1>
+        <p id="psave">{{message}}</p>
+    </h1>
+</div>
+<div id="image">
+    <img src="{% static '/crm/img/crm1.jpeg' %}" alt="Logo" height="1000" width="1200">
+</div>
+<!-- <img src="static/crm/img/"> -->
+
+<!-- <div id="clear"></div> -->
+<!-- <div style="clear: both" id="clear"></div> -->
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<!-- </div> -->
+{% endblock %}

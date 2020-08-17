@@ -1,0 +1,129 @@
+{% extends 'index.html' %} 
+{% load bootstrap %} {% load static %} {% block content %}
+
+<head>
+    <title>Reports</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<span>
+  <h2 style="color:DarkGreen;">Clients Table</h2>
+</span>
+<!-- <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'crm:search' %}">
+    <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search Clients" value="{{request.GET.q}}" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form> -->
+<div class="container" id='div-table'>
+  {% include "crm/pagination.html" with page=search_res %}
+  <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'crm:search' %}" hidden>
+      <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search Clients" value="{{request.GET.q}}" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+   </form>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-wrapper">
+                  <table class="fl-table" id="table"> <!-- class="fl-table" -->
+                      {% if client %}
+                      <a class="btn btn-primary" href="{% url 'crm:clients' %}" id="btn-cl">Back</a>
+                      <a class="btn btn-primary" href="{% url 'crm:home' %}" id="btn-cl">Go To ID</a>
+                          <thead>
+                            <tr>
+                                <th>Client ID</th>
+                                <th>Client Name</th>
+                                <th>Phone No.</th>
+                                <th>Mobile</th>
+                                <th>Address</th>
+                                <th>identity No</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        {% for cl in client %}
+                        <tbody>
+                            <tr>
+                                <td>{{cl.id}}</td>
+                                <td>{{cl.name}}</td>
+                                <td>{{cl.phone}}</td>
+                                <td>{{cl.mobile}}</td>
+                                <td>{{cl.address}}</td>
+                                <td>{{cl.identityNo}}</td>
+                                <td>{{cl.notes}}</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                        {% elif recordfirm %}
+                        <a class="btn btn-primary" href="{% url 'crm:record_firm' %}" id="btn-rec">Back</a>
+                        <thead>
+                            <tr>
+                                <th scope="row">ID</th>
+                                <th>Currency</th>
+                                <th>Company Name</th>
+                                <th>Manager</th>
+                                <th>Representative</th>
+                                <th>Last Visit</th>
+                                <th>Notes</th>
+                                <th>Taxation No.</th>
+                                <th>Papers1</th>
+                                <th>Papers2</th>
+                            </tr>
+                        </thead>
+                        {% for rec in recordfirm %}
+                        <tbody>
+                            <tr>
+                                <td>{{rec.id}}</td>
+                                <td>{{rec.type}}</td>
+                                <td>{{rec.firm_name}}</td>
+                                <td>{{rec.manager}}</td>
+                                <td>{{rec.repres_name}}</td>
+                                <td>{{rec.last_visit}}</td>
+                                <td>{{rec.notes}}</td>
+                                <td>{{rec.tax_no}}</td>
+                                <td>{{rec.part_no}}</td>
+                                <td>{{rec.purchase_no}}</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                        {% elif results %}
+                        <a class="btn btn-primary" href="{% url 'crm:clients' %}" id="btn-cl">Back</a>
+                        <a class="btn btn-primary" href="{% url 'crm:home' %}" id="btn-cl">Home</a>
+                        <thead>
+                              <tr>
+                                  <th>Client ID</th>
+                                  <th>Client Name</th>
+                                  <th>Phone No.</th>
+                                  <th>Mobile</th>
+                                  <th>Address</th>
+                                  <th>identity No</th>
+                                  <th>Notes</th>
+                               </tr>
+                        </thead>
+                            {% for cl in search_res %}
+                            <tbody>
+                                <tr>
+                                    <td>{{cl.id}}</td>
+                                    <td>{{cl.name}}</td>
+                                    <td>{{cl.phone}}</td>
+                                    <td>{{cl.mobile}}</td>
+                                    <td>{{cl.address}}</td>
+                                    <td>{{cl.identityNo}}</td>
+                                    <td>{{cl.notes}}</td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "crm/pagination.html" with page=search_res %}
+
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}

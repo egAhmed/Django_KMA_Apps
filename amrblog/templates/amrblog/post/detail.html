@@ -1,0 +1,45 @@
+{% extends "amrblog/base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p class="date">
+Published {{ post.publish }} by {{ post.author }}
+</p>
+{{ post.body|linebreaks }}
+<!--  -->
+{% with comments.count as total_comments %}
+<h2>
+{{ total_comments }} comment{{ total_comments|pluralize }}
+</h2>
+{% endwith %}
+<!--  -->
+{% for comment in comments %}
+<div class="comment">
+<p class="info">
+Comment {{ forloop.counter }} by {{ comment.name }}
+{{ comment.created }}
+</p>
+{{ comment.body|linebreaks }}
+</div>
+{% empty %}
+<p>There are no comments yet.</p>
+{% endfor %}
+<!--  -->
+{% if new_comment %}
+  <h2>Your comment has been added.</h2>
+{% else %}
+  <h2>Add a new comment</h2>
+  <form action="{% url 'amrblog:post_detail' year=post.publish.year month=post.publish.month day=post.publish.day post=post.slug %}" method="post">
+    <!-- "{{ post.get_absolute_url }}" -->
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+  <p><input type="submit" value="Add comment"></p>
+  </form>
+{% endif %}
+<!--  -->
+<p>
+<a href="{% url "amrblog:post_share" post.id %}">
+Share this post
+</a>
+</p>
+{% endblock %}

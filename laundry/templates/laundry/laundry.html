@@ -1,0 +1,213 @@
+{% extends 'laundry/index.html' %} {% load crispy_forms_tags %}{% load bootstrap %} {% load static %}
+{% load render_table from django_tables2 %}
+{% block content %}
+
+<head>
+    <title>Laundry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/jquery-ui.min.css' %}">
+    {% comment %} <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> {% endcomment %}
+    {% comment %} <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> {% endcomment %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+    
+    {% comment %} <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'laundry:search' %}" hidden>
+        <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search" value="{{request.GET.q}}" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> {% endcomment %}
+{% comment %} {% endif %} {% endcomment %}
+    <br />
+{% if user.is_authenticated %}
+   {% comment %} <div class="container"> {% endcomment %}
+    {% comment %} <div class="container"> {% endcomment %}
+            {% comment %} <div class="floatLeft" style="float:left;"> {% endcomment %}
+        {% comment %} <div class="row">
+            <div class="col-4 ml-auto"> {% endcomment %}
+                {% comment %} <form action="/laundry/bill/" method="POST" name="form">{% csrf_token %} {% endcomment %}
+                    {% comment %} {{ query.get_absolute_url }}"/laundry/bill/" {% url 'laundry:data' bill=pk %} {% endcomment %}
+                    {% comment %} <input type="text" class="form" name="recieveDate" placeholder="Recieve Date"/><br><br>
+                    <input type="text" class="form" name="endDate" placeholder="End Date"/><br><br>
+                    <input type="text" class="form" name="sumtotal" placeholder="Sum Total"/><br><br>
+                    <input type="text" class="form" name="paid" placeholder="Paid"/><br><br>
+                    <input type="text" class="form" name="remain" placeholder="Remain"/><br><br>
+                    <input type="text" class="form" name="client" placeholder="Client Name"/><br><br>
+                    <input type="submit" class="btn-primary" value="Submit"/>             
+                                
+                </form> 
+            </div> {% endcomment %}
+        {% comment %} </div> 
+    </div> {% endcomment %}
+    {% comment %} {% if table %}  {% endcomment %}
+    <br />
+    <br />
+    {% if billtable %}
+        <div >
+            {% render_table billtable %}
+        </div>
+    {% elif day_table %}
+        <div class="float-right">
+            <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'laundry:search_date' %}">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search Date From" value="{{request.GET.f}}" name="f">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search Date To" value="{{request.GET.t}}" name="t">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div><br/>
+        <div >
+            {% render_table day_table %}
+        </div>
+    {% elif date_table_search %}
+        <div class="float-right">
+            <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'laundry:search_date' %}">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search Date From" value="{{request.GET.f}}" name="f">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search Date To" value="{{request.GET.t}}" name="t">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div><br/>
+        <div >
+            {% render_table date_table_search %}
+        </div>
+    {% elif zero_table %}
+        <div >
+            {% render_table zero_table %}
+        </div>
+    {% elif remain_table %}
+        <div >
+            {% render_table remain_table %}
+        </div>
+    {% elif table_sum %}
+        <div >
+            {% render_table table_sum %}
+        </div>
+    {% elif zero_remain_table %}
+        <a class="float-right btn btn-primary" href="{% url 'laundry:GeneratePdf' %}" role="button">Print</a>
+        <h1 class="float-left">{{ zero_remain_tag }} </h1><br/>
+        <div >
+            {% render_table zero_remain_table %}
+        </div>
+    {% elif returnstable %}
+        <h1>All Canceled Bills</h1>
+        <div >
+            {% render_table returnstable %}
+        </div>
+    {% elif table %}
+        <div >
+            {% render_table table %}
+        </div>
+    {% elif table_search %}
+        <div >
+            {% render_table table_search %}
+        </div>
+    {% endif %}
+    <br />
+    {% if form %} 
+        {% comment %} {% render_table table %} {% endcomment %}
+        <div class="floatRight" style="float:left;">
+            <form method="POST">{% csrf_token %}  
+                <div id="f-newitems">
+                    
+                    {{ form.launtype.label_tag }} {{ form.launtype }}
+                    {{ form.quantity.label_tag }} {{ form.quantity }}
+                    {{ form.price.label_tag }} {{ form.price }}
+                    {{ form.total.label_tag }} {{ form.total }}
+                    {{ form.customer.label_tag }} {{ bound.customer }}
+                    {{ form.bill.label_tag }} {{ bound.bill }}
+                                        
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="Add" id=""/>             
+                    {% comment %} {% if editbill_data %}
+                        <a href="{{ editbill_data.get_url_by_id }}" class="btn btn-primary"/>Edit Bill Data</a>
+                    {% elif editbill %}
+                        <a href="{{ editbill.get_url_by_id }}" class="btn btn-primary"/>Edit Bill</a>
+                    {% endif %}
+                    {% if  query %}
+                        <a href="{% url 'laundry:edit_items' bill=query.bill id=query.id %}" class="btn btn-primary"/>Go To Bill and ID</a>
+                    {% endif %} {% endcomment %}
+                    {% comment %} <a href="{% url 'laundry:edit_bills' id=query.bill%}" class="btn btn-primary"/>Go To Edit Bill after</a>
+                    <a href="{{ item_id.get_url_by_bill_and_id }}" class="btn btn-primary"/>Go To Bill and ID after</a> {% endcomment %}
+                </div>
+            </form>
+        </div>
+        <br />
+    {% elif form2 %}
+        <div class="floatRight" style="float:left;">
+            <form method="POST" action='/laundry/additem/' id="f2">{% csrf_token %}  
+                <div id="f-newitems">
+                    {% for field in form2 %}
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                        </div>
+                    {% endfor %}
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="Add First Item" id=""/>
+                    <br />
+                </div>
+            </form>
+        </div>
+        <br />
+    {% endif %}
+    
+  
+{% else %}
+    <div class="container" style="inline:block;">
+        <br />
+        <br />
+    </div>
+    <div class="container">
+        {% comment %} <table class="table table-striped">
+            <tbody id="tbody-id"> {% endcomment %}
+                <tr>
+                    <td colspan="1">
+                        <form class="well form-horizontal" style="background-color:white">
+                            <fieldset>
+                                <br />
+                                <p><strong>You must login in order to continue</strong></p><br>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+            {% comment %} </tbody>
+        </table> {% endcomment %}
+    </div>
+    <br>
+{% endif %}
+
+<script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script >
+    {% comment %} if (document.getElementById("f2")){
+        function processUser(){
+            var parameters = location.search.substring(1).split("&");
+            var temp = parameters[0].split("=");
+            l = unescape(temp[1]);
+            temp = parameters[1].split("=");
+            p = unescape(temp[1]);
+            document.getElementById("price").innerHTML = l;
+            document.getElementById("customer").innerHTML = p;
+        }
+    }; {% endcomment %}
+    
+// 
+{% comment %} var value1=document.getElementById("price").innerHTML;
+var value2=document.getElementById("customer").innerHTML;
+var queryString = "?para1=" + value1 + "&para2=" + value2;
+window.location.href = "laundry/laundry.html" + queryString;
+
+//
+var queryString = decodeURIComponent(window.location.search);
+queryString = queryString.substring(1);
+var queries = queryString.split("&");
+for (var i = 0; i < queries.length; i++)
+{
+  document.write(queries[i] + "<br>");
+} {% endcomment %}
+</script>
+
+{% endblock %}

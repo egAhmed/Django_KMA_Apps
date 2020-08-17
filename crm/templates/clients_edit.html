@@ -1,0 +1,43 @@
+{% extends 'index.html' %} {% load static %} {% block content %}
+
+<head>
+    <!-- <title>Record Company</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<!-- <div id="clear">
+    <img src="{% static 'crm/img/crm1.jpeg' %}" alt="Logo" height="1000" width="1200">
+</div> -->
+<div class="container" id='div-f-cl'>
+    <!-- <form method="post"> -->
+    <!-- {% csrf_token %} -->
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">Clients</div>
+            <div class="panel-body">
+
+                <!-- <button type="submit" class="btn btn-primary" id="">Add</button> -->
+                <a class="btn btn-primary" href="{% url 'crm:clients_edit' %}">Table</a>
+                <!-- <a class="btn btn-primary" href="{{ client.get_absolute_url }}">Edit</a> -->
+
+                <p>{{clients.id}}</p>
+                <p>{{cliens.name}}</p>
+                <p>{{clients.phone}}</p>
+                <p>{{clients.address}}</p>
+                <a class="btn btn-primary" href="{% url 'crm:clients_edit' %}">Edit</a>
+                <!-- <a class="btn btn-primary" href="{{ cl.get_absolute_url }}">Edit</a> -->
+
+            </div>
+        </div>
+    </div>
+    <!-- </form> -->
+</div>
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<!-- </div> -->
+{% endblock %}

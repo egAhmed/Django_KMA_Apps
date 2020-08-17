@@ -1,0 +1,122 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %} {% load bootstrap %} {% load static %} {% block content %}
+
+<head>
+    <!-- <title>Record Company</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+{% if user.is_authenticated %}
+
+<!-- <div id="clear">
+    <img src="{% static 'crm/img/crm1.jpeg' %}" alt="Logo" height="1000" width="1200">
+</div> -->
+<div class="container" id='div-f-cl'>
+     <form method="post" enctype="multipart/form-data"> <!--#action="{% url 'crm:home' %}" -->
+        {% csrf_token %}
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ comp }}</div>
+                <div class="panel-body">
+                    <!-- {% if error_message %}
+                    <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+                    {% endif %} -->
+                    {{ form|crispy}}
+                    <button type="submit" class="btn btn-primary" id="saveclients">{{ btn }}</button>
+                    <!--  -->
+                    <!-- <a class="btn btn-primary" href="{% url 'crm:clients_edit' %}">Table</a> -->
+                    <!-- <a class="btn btn-primary" href="{% url 'crm:clients' %}">{{ New }}</a> -->
+                    <!-- <button type="submit" class="btn btn-primary" id="">{{ btn }}</button> -->
+                    {% if instance %}
+                    <a class="btn btn-primary" href="{% url 'crm:clients' %}" id="saveclients">{{ New }}</a>
+
+                    <!-- <a class="btn btn-primary" href="{{ instance.get_ID }}">Go To ID</a> -->
+                    <a class="btn btn-primary" href="{{ instance.goto_home }}" id="gotohome">Go To Home</a>
+                    {% else %}
+
+                    <a class="btn btn-primary" href="{% url 'crm:home' %}" id="gotohome">{{ New }}</a> {% endif %}
+
+                    <!-- <div class="form-group clearfix">
+                        <label for="{{ form.username.id_for_label }}" class="col-md-4 control-label text-right">Username<span class="text-red">*</span>:</label>
+                        <div class="col-md-6">
+                            {{ form.record }}
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label for="{{ form.email.id_for_label }}" class="col-md-4 control-label text-right">Email<span
+                                class="text-red">*</span>:</label>
+                        <div class="col-md-6">
+                            {{ form.name }}
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label for="{{ form.password.id_for_label }}" class="col-md-4 control-label text-right">Password<span class="text-red">*</span>:</label>
+                        <div class="col-md-6">
+                            {{ form.phone }}
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label for="{{ form.password_repeat.id_for_label }}" class="col-md-4 control-label text-right">Confirm password:</label>
+                        <div class="col-md-6">
+                            {{ form.address }}
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-group clearfix">
+                        <label for="{{ form.first_name.id_for_label }}" class="col-md-4 control-label text-right">First
+                            Name:</label>
+                        <div class="col-md-6">
+                            {{ form.first_name }}
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label for="{{ form.last_name.id_for_label }}" class="col-md-4 control-label text-right">Last
+                            Name:</label>
+                        <div class="col-md-6">
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label for="{{ form.phone_number.id_for_label }}" class="col-md-4 control-label text-right">Phone Number:</label>
+                        <div class="col-md-6">
+                            {{ form.phone_number }}
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-md-6 col-md-offset-4"> -->
+                    <!-- <input type="submit" value="Add" class="btn btn-success"> -->
+                    <!-- <button type="submit" class='btn btn-outline-primary'>Add</button> -->
+
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% comment %} {% else %}
+<br>
+<div class="container">
+    <table class="table table-striped">
+        <tbody id="tbody-id">
+          <tr>
+            <td colspan="1">
+              <form class="well form-horizontal" style="background-color:white">
+                <fieldset>
+                <br>
+                    <p><strong>You must login in order to continue</strong></p><br>
+                </fieldset>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br> {% endcomment %}
+
+{% endif %}
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<!-- </div> -->
+{% endblock %}

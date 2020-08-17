@@ -1,0 +1,261 @@
+{% load static %}
+{% load bootstrap %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}CRM Application{% endblock %}</title>
+    <!-- {% load static %} -->
+    <!-- NOTE:important the problem in 'style.css' was because of the 'crm' folder inside the 'static' folder
+            so i changed the path TO 'STATIC_URL = '/static/crm/' in 'settings' instead of "STATIC_URL = '/static/'"
+          GoTo 'settings' to understand what happen to solve this issue  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% comment %} <link rel="icon" href="{% static 'img/signup.png' %}"> {% endcomment %}
+    <link rel="icon" href="{% static 'img/linkedIn1.png' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+</head>
+
+<body class="override">
+    <!-- <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Page 1</a></li>
+                <li><a href="#">Page 2</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </nav> -->
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed top-0">
+            <a class="navbar-brand" href="/">KMA Applications</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/crm">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'blog:allblogs' %}">My Bolg<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'jobs:home' %}">Works Gallery</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/crm/reports/">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item active">
+                            <a class="nav-link disabled">Welcome: {{ user.username }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'crm:search' %}">
+                    <input class="form-control mr-sm-2" type="text" name='q' placeholder="Search Clients" value="{{request.GET.q}}" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <!-- </header> -->
+
+        <!-- <nav class="navbar navbar-inverse" role="navigation"> -->
+        <nav class="navbar navbar-expand-lg navbar-lightdark bg-dark mb-3 fixed top-0" id="nav-main">
+            <div class="container">
+                <div class="navbar-header">
+                    <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"> -->
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                    <!-- <a class="navbar-brand" style="color: cyan" id="mycrm" href="/login/">
+                        <h1>MY CRM</h1>
+                    </a> -->
+                </div>
+
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- <li class="nav-item">
+                            <h5><a href="/register/" id="register" class='disabled-rec'>Register</a></h5>
+                        </li> -->
+                        <li>
+                            <h5><a href="/laundry/" id="rec">Laundry </a></h5>
+                        </li>
+                        {% comment %} <li>
+                            <h5><a href="/laundry/additem/" id="rec">Laundry Add Item</a></h5>
+                        </li> {% endcomment %}
+                        <li>
+                            <h5><a href="/crm/record/" id="rec">Register A Firm</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="{% url 'crm:clients' %}" id="index-cl">Clients</a></h5>
+                            <!-- <h5><a href="/clients/" id="index-cl">Clients</a></h5> -->
+                        </li>
+                    </ul>
+
+                    <!-- </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/signup/" id="signup">Sign Up</a></li>
+                </ul>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/record/" id="record">Register A Firm</a></li>
+                </ul>
+            </div> -->
+                </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <div class="container" style="inline:block;">
+    
+</div>
+
+            <footer class="page-footer bg-dark text-white font-small mdb-color">
+                <div class="container text-center text-md-left">
+                    <div class="row text-center text-md-left mt-3 pb-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-4">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">About WebSite </h6>
+                            <p>This website is developed by Python <i class="fab fa-python" aria-hidden="true"></i>, Javascript <i class="fab fa-js-square" aria-hidden="true"></i> and JQuery for personal portfolio &amp; ----------- web application hosted on ---------. All images used in site are copyright ----- image.</p>
+                        </div>
+                        <hr class="w-100 clearfix d-md-none">
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">Projects</h6>
+                            <p>
+                                <a class="text-info font-weight-bold" href="#"><i class="fas fa-fan mr-3" aria-hidden="true"></i> Iris Project</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="fas fa-car mr-3" aria-hidden="true"></i> AutoMgl Project</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="far fa-envelope mr-3" aria-hidden="true"></i>Punctuation</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="fab fa-github mr-3" aria-hidden="true"></i> Amr Aly</a>
+                            </p>
+                        </div>
+                        <hr class="w-100 clearfix d-md-none">
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">Useful links</h6>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="fas fa-user-plus mr-3" aria-hidden="true"></i> Your Account</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#"><i class="far fa-paper-plane mr-3" aria-hidden="true"></i> Link_1</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#" target="_blank"><i class="far fa-paper-plane mr-3" aria-hidden="true"></i> Link_2</a>
+                            </p>
+                            <p>
+                            <a class="text-info font-weight-bold" href="#" target="_blank"><i class="far fa-paper-plane mr-3" aria-hidden="true"></i> Link_3</a>
+                            </p>
+                        </div>
+                        <hr class="w-100 clearfix d-md-none">
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold text-light">Contact</h6>
+                            <p>
+                            <i class="fas fa-home mr-3" aria-hidden="true"></i> Egypt, Alexandria</p>
+                            <p>
+                            <i class="fas fa-envelope mr-3" aria-hidden="true"></i> kmasoftwaresolutions@gmail.com</p>
+                            <p>
+                            <i class="fas fa-mobile-alt mr-4" aria-hidden="true"></i> +20-106-717-4141</p>      
+                        </div>      
+                    </div>
+                    <hr>
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-7 col-lg-8">
+                            <p class="text-center text-md-left">&copy Amr Aly Copyright:  {% now "Y" %}    
+                            <a href="https://github.com/cehceh" target="_blank">
+                                <strong class="text-info font-weight-bold"><i class="fab fa-github-alt" aria-hidden="true"></i> KMA for software solutions</strong>
+                            </a>
+                            </p>
+                        </div>
+                            <div class="col-md-5 col-lg-4 ml-lg-0">
+                                <div class="text-center text-md-right">
+                                    <ul class="list-unstyled list-inline">
+                                        <li class="list-inline-item">
+                                        <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://www.facebook.com" target="_blank">
+                                            <i class="fab fa-facebook-f" aria-hidden="false">FB</i>
+                                        </a>
+                                        </li> 
+                                        <li class="list-inline-item">
+                                        <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://twitter.com/" target="_blank">
+                                            <i class="fab fa-twitter" aria-hidden="true">twitter</i>
+                                        </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                        <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://google.com/" target="_blank">
+                                            <i class="fab fa-google-plus-g" aria-hidden="true"></i>
+                                        </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1" href="https://www.linkedin.com/in/amr-ali-82909894/" target="_blank">
+                                                <i class="fab fa-linkedin-in" aria-hidden="true">linkedin</i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </footer>
+
+    {% comment %} small footer {% endcomment %}
+    {% comment %} <footer class="footer mt-auto py-3"id="footer"> <!-- "fixed-bottom" "footer mt-auto py-3" -->
+        <!-- class= "site-footer footer-partners"-->
+        <!-- <div class="footer-partner footer-partner-codepen" id="divfooter">
+             <div class="row well ml-t">
+            <div class="col-lg-8 col-md-8" id="fodev">
+              <span class="text-muted"> -->
+        <div class="footer-partner footer-partner-codepen" id="divfooter">
+            <div class="container" id="footer-login">
+               
+                    <div class="col-lg-4 col-md-4" id="all">
+                        <p class="m-t" style="color:white"><a href="https://amr-aly.simplesite.com" target="_blank">www.amr-aly.simplesite.com</a></p>
+                        <p class="m-t" style="color:white">Copy right &copy Amr Aly {% now "Y" %}</p>
+                    </div>
+            </div>
+        </div>
+        <!-- <div style="clear:both; display:block;"></div> -->
+    </footer> {% endcomment %}
+{% comment %}  {% endcomment %}
+
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>
