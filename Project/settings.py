@@ -91,8 +91,11 @@ WSGI_APPLICATION = 'Project.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'gold2002egl@gmail.com'
-EMAIL_HOST_PASSWORD = 'mero1981923'
+# encrypt username
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_USER = 'youremail@any.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_HOST_PASSWORD = '************'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

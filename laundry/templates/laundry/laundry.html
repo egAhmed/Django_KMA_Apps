@@ -50,13 +50,14 @@
             {% render_table billtable %}
         </div>
     {% elif day_table %}
+        <a class="float-left btn btn-outline-primary" role="button" href="#print_day_report">Print Day Report</a>
         <div class="float-right">
             <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'laundry:search_date' %}">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search Date From" value="{{request.GET.f}}" name="f">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search Date To" value="{{request.GET.t}}" name="t">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-        </div><br/>
+        </div><br/><br/>
         <div >
             {% render_table day_table %}
         </div>
@@ -67,7 +68,7 @@
                 <input class="form-control mr-sm-2" type="text" placeholder="Search Date To" value="{{request.GET.t}}" name="t">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-        </div><br/>
+        </div><br/><br/>
         <div >
             {% render_table date_table_search %}
         </div>
